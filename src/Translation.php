@@ -4,18 +4,20 @@
  * the library is optimized for sites with only few translated strings
  */
 
+namespace {
 if (!function_exists('tr')) {
-    function tr($text) {return Translation::tr($text);}
+    function tr($text) {return Aoloe\Translation::tr($text);}
+}
 }
 
-namespace Aoloe;
+namespace Aoloe {
 
 class Translation {
     static private $translation = array();
     static public function clear() {self::$translation = array();}
     static public function read($filename, $language) {
         if (file_exists($filename)) {
-            foreach (Spyc::YAMLLoadString(file_get_contents($filename)) as $key => $value) {
+            foreach (\Spyc::YAMLLoadString(file_get_contents($filename)) as $key => $value) {
                 self::$translation[$key] = $value[$language];
             }
         }
@@ -30,4 +32,5 @@ class Translation {
             return '«'.$text.'»';
         }
     }
+}
 }
