@@ -18,8 +18,12 @@ class Translation {
     static public function read($filename, $language) {
         if (file_exists($filename)) {
             foreach (\Spyc::YAMLLoadString(file_get_contents($filename)) as $key => $value) {
-                self::$translation[$key] = $value[$language];
+                if (is_array($value)) {
+                    self::$translation[$key] = $value[$language];
+                }
             }
+        } else {
+            echo("<p>File ".$filename." does not exist.</p>\n");
         }
     }
     static private $untranslated = array();
